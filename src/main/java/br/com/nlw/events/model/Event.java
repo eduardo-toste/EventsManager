@@ -1,7 +1,6 @@
 package br.com.nlw.events.model;
 
 import jakarta.persistence.*;
-import jdk.jfr.Enabled;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
