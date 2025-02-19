@@ -5,7 +5,6 @@ import br.com.nlw.events.dto.SubscriptionResponse;
 import br.com.nlw.events.exception.EventNotFoundException;
 import br.com.nlw.events.exception.SubscriptionConflictException;
 import br.com.nlw.events.exception.UserIndicadorNotFoundException;
-import br.com.nlw.events.model.Subscription;
 import br.com.nlw.events.model.User;
 import br.com.nlw.events.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SubscriptionController {
+
     @Autowired
     private SubscriptionService service;
 
