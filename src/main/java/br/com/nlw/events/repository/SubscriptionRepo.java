@@ -1,5 +1,6 @@
 package br.com.nlw.events.repository;
 
+import br.com.nlw.events.dto.SubscriptionRankingByUser;
 import br.com.nlw.events.dto.SubscriptionRankingItem;
 import br.com.nlw.events.model.Event;
 import br.com.nlw.events.model.Subscription;
