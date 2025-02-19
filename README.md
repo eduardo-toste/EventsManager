@@ -71,6 +71,8 @@ Esta API utiliza o Swagger para documentação interativa. Para acessar a docume
 http://localhost:8080/swagger-ui.html
 ```
 
+![img.png](src/main/resources/img.png)
+
 ## Banco de Dados
 Por padrão, a API utiliza o banco de dados MySQL. Caso queira usar outro banco, altere as configurações no arquivo `application.properties`.
 
