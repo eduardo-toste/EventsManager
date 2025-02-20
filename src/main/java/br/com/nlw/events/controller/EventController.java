@@ -1,5 +1,8 @@
 package br.com.nlw.events.controller;
 
+import br.com.nlw.events.dto.ErrorMessage;
+import br.com.nlw.events.exception.EventConflictException;
+import br.com.nlw.events.exception.EventNotFoundException;
 import br.com.nlw.events.model.Event;
 import br.com.nlw.events.service.EventService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +29,7 @@ public class EventController {
             @ApiResponse(responseCode = "200", description = "Evento criado com sucesso")
     })
     @PostMapping("/events")
-    public Event addNewEvent(
+    public ResponseEntity<?> addNewEvent(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Dados do evento a ser criado",
                     required = true,
@@ -48,7 +51,14 @@ public class EventController {
             )
             @RequestBody Event newEvent
     ) {
-        return service.addNewEvent(newEvent);
+        try {
+            Event createdEvent = service.addNewEvent(newEvent);
+            return ResponseEntity.status(201).body(createdEvent);
+        } catch (EventConflictException ex) {
+            return ResponseEntity.status(409).body(new ErrorMessage(ex.getMessage()));
+        } catch (Exception ex) {
+            return ResponseEntity.status(400).body(new ErrorMessage("Erro ao processar a requisição"));
+        }
     }
 
     @Operation(summary = "Realiza a busca de todos os eventos cadastrados", method = "GET")
@@ -56,8 +66,12 @@ public class EventController {
             @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
     })
     @GetMapping("/events")
-    public List<Event> getAllEvents(){
-        return service.getAllEvents();
+    public ResponseEntity<?> getAllEvents(){
+        try {
+            return ResponseEntity.ok(service.getAllEvents());
+        } catch (EventNotFoundException ex){
+            return ResponseEntity.status(404).body(new ErrorMessage(ex.getMessage()));
+        }
     }
 
     @Operation(summary = "Realiza a busca de um evento específico pelo seu Pretty Name", method = "GET")
