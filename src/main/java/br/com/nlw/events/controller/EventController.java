@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import br.com.nlw.events.utils.EventSwaggerExamples;
 import java.util.List;
 
 @RestController
@@ -26,7 +26,12 @@ public class EventController {
 
     @Operation(summary = "Realiza a criação de um novo evento", method = "POST")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Evento criado com sucesso")
+            @ApiResponse(responseCode = "200", description = "Evento criado com sucesso",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = EventSwaggerExamples.RESPONSE_200_CREATE_EVENT))),
+            @ApiResponse(responseCode = "409", description = "Evento já existente",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = EventSwaggerExamples.RESPONSE_409_CREATE_EVENT))),
     })
     @PostMapping("/events")
     public ResponseEntity<?> addNewEvent(
@@ -35,25 +40,14 @@ public class EventController {
                     required = true,
                     content = @Content(
                             mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    name = "Exemplo de evento",
-                                    value = "{\n"
-                                            + "    \"title\": \"Nome Evento\",\n"
-                                            + "    \"location\": \"Online\",\n"
-                                            + "    \"price\": 0,\n"
-                                            + "    \"startDate\": \"2025-06-06\",\n"
-                                            + "    \"endDate\": \"2025-06-09\",\n"
-                                            + "    \"startTime\": \"19:00:00\",\n"
-                                            + "    \"endTime\": \"22:00:00\"\n"
-                                            + "}"
-                            )
+                            examples = @ExampleObject(name = "Exemplo de evento", value = EventSwaggerExamples.INPUT_CREATE_EVENT)
                     )
             )
             @RequestBody Event newEvent
     ) {
         try {
             Event createdEvent = service.addNewEvent(newEvent);
-            return ResponseEntity.status(201).body(createdEvent);
+            return ResponseEntity.status(200).body(createdEvent);
         } catch (EventConflictException ex) {
             return ResponseEntity.status(409).body(new ErrorMessage(ex.getMessage()));
         } catch (Exception ex) {
@@ -63,7 +57,12 @@ public class EventController {
 
     @Operation(summary = "Realiza a busca de todos os eventos cadastrados", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = EventSwaggerExamples.RESPONSE_200_GET_EVENTS))),
+            @ApiResponse(responseCode = "404", description = "Nenhum evento encontrado",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = EventSwaggerExamples.RESPONSE_400_GET_EVENTS)))
     })
     @GetMapping("/events")
     public ResponseEntity<?> getAllEvents(){
@@ -76,7 +75,9 @@ public class EventController {
 
     @Operation(summary = "Realiza a busca de um evento específico pelo seu Pretty Name", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = EventSwaggerExamples.RESPONSE_200_GET_EVENT_BY_PRETTYNAME))),
     })
     @GetMapping("/events/{prettyName}")
     public ResponseEntity<Event> getByPrettyName(@PathVariable String prettyName){
