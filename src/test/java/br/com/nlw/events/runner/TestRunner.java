@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         monochrome = true,
         features = "src/test/resources/features",
-        glue = {"steps", "hooks"},
+        glue = {"br.com.nlw.events.steps", "br.com.nlw.events.hooks"},
         plugin = {"json:target/reports/CucumberReports.json", "pretty", "io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"},
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         dryRun = false,
