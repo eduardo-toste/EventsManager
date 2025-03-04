@@ -13,6 +13,6 @@ public class ApiHelper {
                 .contentType(ContentType.JSON)
                 .body(eventData)
                 .when()
-                .post("/event");
+                .post("/events");
     }
 }
