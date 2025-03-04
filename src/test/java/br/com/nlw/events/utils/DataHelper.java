@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class DataHelper {
     public static Map<String, Object> EventData(String title, String location,
-                                                int price, LocalDate startDate,
+                                                Float price, LocalDate startDate,
                                                 LocalDate endDate, LocalTime startTime,
                                                 LocalTime endTime) {
 

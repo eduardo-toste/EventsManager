@@ -20,7 +20,7 @@ public class CreateEventSteps {
     @Given("que eu informo os dados válidos de um evento")
     public void queEuInformoOsDadosVálidosDeUmEvento() {
         eventData = DataHelper.EventData("Java Immersive", "Online",
-                0, LocalDate.of(2025, 6, 6), LocalDate.of(2025, 6, 9),
+                0.0F, LocalDate.of(2025, 6, 6), LocalDate.of(2025, 6, 9),
                 LocalTime.of(14, 30, 00), LocalTime.of(18, 30, 00));
 
         response = ApiHelper.createEvent(eventData);
@@ -30,9 +30,9 @@ public class CreateEventSteps {
     public void deveMeRetornarOsDadosDoEventoCriado() {
         response.then()
                 .statusCode(HttpStatus.SC_OK)
-                .body("name", is("Java Immersive"))
+                .body("title", is("Java Immersive"))
                 .body("location", is("Online"))
-                .body("price", is(0))
+                .body("price", is(0.0F))
                 .body("startDate", is("2025-06-06"))
                 .body("endDate", is("2025-06-09"))
                 .body("startTime", is("14:30:00"))
