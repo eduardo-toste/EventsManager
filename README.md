@@ -10,6 +10,7 @@ Esta é uma API desenvolvida em Java com Spring Boot para gerenciamento de event
 - MySQL
 - Maven
 - Swagger para documentação da API
+- Rest Assured para testes automatizados de API
 
 ## Estrutura do Projeto
 A estrutura do projeto segue a organização MVC com pacotes bem definidos:
@@ -23,6 +24,23 @@ src/main/java/br.com.nlw.events/
 │-- repository      # Repositórios (Camada de persistência)
 │-- service         # Regras de negócio e serviços
 │-- EventsApplication.java  # Classe principal para inicialização
+```
+
+## Testes Automatizados
+Este projeto conta com testes automatizados de API utilizando Rest Assured. Os testes garantem a integridade e o correto funcionamento dos endpoints, validando as respostas da API de forma eficiente.
+
+A estrutura dos testes está localizada em:
+```
+src/test/java/br.com.nlw.events/
+│-- hooks          # Configuração inicial dos testes
+│-- runner         # Execução dos testes
+│-- steps          # Definição dos passos dos testes
+│-- utils          # Utilitários para suporte aos testes
+│-- resources/features  # Arquivos de testes BDD
+```
+Para executar os testes:
+```sh
+mvn test
 ```
 
 ## Configuração e Execução
@@ -94,3 +112,4 @@ Se você deseja contribuir com este projeto, siga os passos abaixo:
    git push origin minha-feature
    ```
 5. Abra um Pull Request para revisão.
+
